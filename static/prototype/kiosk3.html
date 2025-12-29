@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>URL Rotator - Controller</title>
+  <style>
+    body, html {
+      margin: 0;
+      height: 100%;
+      background: black;
+      font-family: Arial, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #mainText {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    #timerDisplay {
+      font-size: 22px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="mainText">Preparing to start...</div>
+  <div id="timerDisplay">Loading timer...</div>
+
+  <script>
+    let externalTab = null;
+    let rotationTimeoutId = null;
+    let countdownIntervalId = null;
+    let isRotating = false;
+    let urls = [];
+    let currentIndex = 0;
+
+    const startTimerSeconds = 10;
+
+    function showText(text) {
+      document.getElementById("mainText").textContent = text;
+    }
+
+    function showTimer(seconds) {
+      const display = document.getElementById('timerDisplay');
+
+      if (countdownIntervalId !== null) {
+        clearInterval(countdownIntervalId);
+        countdownIntervalId = null;
+      }
+
+      display.textContent = `Time left: ${seconds}s`;
+
+      countdownIntervalId = setInterval(() => {
+        seconds--;
+        if (seconds <= 0) {
+          clearInterval(countdownIntervalId);
+          countdownIntervalId = null;
+          display.textContent = "Time's up!";
+        } else {
+          display.textContent = `Time left: ${seconds}s`;
+        }
+      }, 1000);
+    }
+
+    async function startRotation() {
+      try {
+        const response = await fetch('conf/urls.json');
+        urls = await response.json();
+
+        if (!Array.isArray(urls) || urls.length === 0) {
+          throw new Error("URLs list is empty or invalid.");
+        }
+
+        isRotating = true;
+        currentIndex = 0;
+        rotateToNextUrl();
+      } catch (error) {
+        console.error('Error loading URLs:', error);
+        showText("Failed to load URLs.");
+      }
+    }
+
+    function rotateToNextUrl() {
+      if (!isRotating || urls.length === 0) return;
+
+      if (currentIndex >= urls.length) currentIndex = 0;
+
+      const { name, url, duration } = urls[currentIndex];
+
+      showText(`Showing: ${name}`);
+      showTimer(duration);
+
+      // Encode URL parameters safely
+      const params = new URLSearchParams({
+        name,
+        url,
+        duration: duration.toString(),
+      });
+      const viewerUrl = `viewer.html?${params.toString()}`;
+
+      try {
+        if (!externalTab || externalTab.closed) {
+          externalTab = window.open(viewerUrl, 'viewerTab');
+        } else {
+          externalTab.location.href = viewerUrl;
+          externalTab.focus();
+        }
+      } catch (err) {
+        console.error("Error opening or updating external tab:", err);
+        externalTab = window.open(viewerUrl, 'viewerTab');
+      }
+
+      currentIndex++;
+
+      if (rotationTimeoutId !== null) {
+        clearTimeout(rotationTimeoutId);
+      }
+      rotationTimeoutId = setTimeout(rotateToNextUrl, duration * 1000);
+    }
+
+    // Initial countdown before starting rotation
+    showText("Preparing to start...");
+    showTimer(startTimerSeconds);
+
+    setTimeout(() => {
+      startRotation();
+    }, startTimerSeconds * 1000);
+
+  </script>
+
+</body>
+</html>

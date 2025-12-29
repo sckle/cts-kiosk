@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CTS</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* Info bar on bottom-left */
+    #infoBar {
+      position: absolute;
+      bottom: 5px;  /* 👈 moved to bottom */
+      left: 50%;    /* 👈 stay on left */
+      transform: translateX(-50%); /* Shifts it back by half its width */
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 16px;
+      z-index: 10;
+      text-align: left;
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="infoBar">
+    <div id="urlName" hidden>Loading...</div>
+    <div id="timerDisplay">Preparing...</div>
+  </div>
+
+  <iframe id="contentFrame" src=""></iframe>
+
+  <script>
+    let urls = [];
+    let currentIndex = 0;
+    let rotationTimeout = null;
+    let countdownInterval = null;
+    let counter = 0;
+
+    const urlNameEl = document.getElementById('urlName');
+    const timerDisplayEl = document.getElementById('timerDisplay');
+    const iframeEl = document.getElementById('contentFrame');
+
+    function getCurrentTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1; // Months are zero-based
+        const day = now.getDate();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+
+        return (`${day}/${month} ${hours}:${minutes}`);
+    }
+
+    function showTimer(seconds) {
+      if (countdownInterval) clearInterval(countdownInterval);
+      timerDisplayEl.textContent = `Time left: ${seconds}s`;
+
+      countdownInterval = setInterval(() => {
+        seconds--;
+        if (seconds <= 0) {
+          clearInterval(countdownInterval);
+          timerDisplayEl.textContent = `Loading next...`;
+        } else {
+          timerDisplayEl.textContent = `Time left: ${seconds}s`;
+        }
+      }, 1000);
+    }
+
+    function rotateToNextUrl() {
+      if (!urls.length) return;
+
+      if (currentIndex >= urls.length) {
+        currentIndex = 0;
+      }
+
+      const { name, url, duration } = urls[currentIndex];
+      urlNameEl.textContent = `${name}`;
+      showTimer(duration);
+
+      iframeEl.src = url;
+
+      currentIndex++;
+
+      if (rotationTimeout) clearTimeout(rotationTimeout);
+      rotationTimeout = setTimeout(rotateToNextUrl, duration * 1000);
+    }
+
+    async function startRotation() {
+      try {
+        const response = await fetch('conf/urls.json');
+        urls = await response.json();
+
+        if (!Array.isArray(urls) || urls.length === 0) {
+          urlNameEl.textContent = 'No URLs found.';
+          return;
+        }
+
+        rotateToNextUrl();
+      } catch (error) {
+        console.error('Failed to load URL list:', error);
+        urlNameEl.textContent = 'Failed to load URLs.';
+      }
+    }
+
+    document.title = `${getCurrentTime()}`;
+    startRotation();
+
+    // Reload after 1 hours
+    setTimeout(function() {
+      location.reload();
+    }, 1 * 60 * 60 * 1000);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+[
+  {
+    "name": "ifconfig.me",
+    "url": "https://ifconfig.me/",
+    "duration": 0
+  },
+  {
+    "name": "Grenden Conference Room",
+    "url": "https://axis-maps.safecity.axis.com/?room=Malala",
+    "duration": 0
+  },
+  {
+    "name": "Grenden M7RoofLab",
+    "url": "http://172.29.171.68/axis-cgi/media.cgi?camera=1&videoframeskipmode=empty&videozprofile=classic&resolution=1920x1080&audio=0&audiocodec=aac&audiosamplerate=16000&audiobitrate=32000&timestamp=1763461500098&videocodec=h264&container=mp4",
+    "duration": 0
+  },
+  {
+    "name": "Bullet time video",
+    "url": "/bullettime.html",
+    "duration": 45
+  },
+  {
+    "name": "Lomma Beachcam",
+    "url": "https://camstreamer.com/embed/BFcEJ39c2RS6mMI6oXKZFUwQkF5s4XR2WchDVRc5?vq=hd1080",
+    "duration": 60
+  },
+  {
+    "name": "Habo Ljung Webcamera Zoom",
+    "url": "https://camstreamer.com/embed/M685pBUOm8BHwhpuNBC0aLOsnu5HyT1zbu91lvk5?vq=hd1080",
+    "duration": 60
+  },
+  {
+    "name": "Habo Ljung Webcamera Panaroma",
+    "url": "https://camstreamer.com/embed/w7n8z0DJiEyOfAccMWH9jLP4vLhGR7argrcYGD0m?vq=hd1080",
+    "duration": 60
+  },
+  {
+    "name": "Grenden Gym",
+    "url": "https://gym.safecity.axis.com/kiosk",
+    "duration": 30
+  },
+  {
+    "name": "Grenden Garage",
+    "url": "/garage.html",
+    "duration": 20
+  },
+  {
+    "name": "Grenden Gym Stats",
+    "url": "https://gym.safecity.axis.com/statistics",
+    "duration": 30
+  }
+]

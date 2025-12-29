@@ -1,0 +1,15 @@
+[Unit]
+Description=Local python webserver
+After=network.target
+
+[Service]
+ExecStart=/home/pi/venv/bin/python /home/pi/cts/kiosk/weblib/heartbeat_app.py /home/pi/cts/kiosk/conf/settings.json
+#ExecStart=cat /home/pi/cts/kiosk/conf/settings.json
+Restart=always
+RestartSec=5
+User=pi
+WorkingDirectory=/home/pi/cts/kiosk
+
+[Install]
+WantedBy=multi-user.target
+

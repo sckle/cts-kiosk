@@ -1,0 +1,15 @@
+[Unit]
+Description=Local python webserver
+After=network.target
+
+[Service]
+ExecStart=python3 -m http.server 8080
+Restart=always
+RestartSec=5
+User=pi
+#Environment=DISPLAY=:0
+WorkingDirectory=/home/pi/cts/kiosk
+
+[Install]
+WantedBy=multi-user.target
+

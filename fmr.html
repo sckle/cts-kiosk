@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FMR</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      display: flex;               /* enable flexbox */
+      flex-direction: column;      /* stack content vertically */
+      align-items: center;         /* center horizontally */
+      justify-content: flex-start; /* align content to the top */
+      min-height: 100vh;           /* make it fill the screen */
+      background-color: white;     /* set background color to white */
+    }
+
+    img {
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    .visible {
+      opacity: 1;
+    }
+
+    /* Container for logo and title */
+    .logo-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;         /* Add space below logo/title */
+    }
+
+    .logo-container img {
+      margin-right: 15px;          /* Space between logo and title */
+      width: 50px;                 /* Logo size */
+    }
+
+    .logo-container h1 {
+      font-size: 24px;             /* Title font size */
+      margin: 0;
+    }
+
+    /* Container for image 2 and 3 side by side */
+    .row {
+      display: flex;
+      gap: 20px;                   /* space between image 2 and 3 */
+      align-items: flex-start;
+      justify-content: center;     /* center them as well */
+    }
+
+    #image1 {
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    #image2 {
+      display: block;
+      width: 300px;
+    }
+
+    #image3 {
+      display: block;
+      width: 200px;
+      margin-top: auto; /* Push image 3 to the bottom */
+    }
+    #image4 {
+      display: block;
+      width: 700px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Image 1 on top -->
+  <div>
+    <img id="image1" src="/static/image/fmr.png" alt="Image 1">
+  </div>
+
+  <div class="row">
+    <img id="image2" src="/static/image/bubble.gif" alt="Image 2">
+  </div>
+
+  <!-- Image 2 and 3 side by side -->
+  <div class="row">
+    <img id="image3" src="/static/image/arrow.webp" alt="Image 3">
+    <img id="image4" src="/static/image/s30.png" alt="Image 3">
+  </div>
+
+  <script>
+    // Show image 1 immediately
+    document.getElementById('image1').classList.add('visible');
+
+    // Show image 2 after 3 seconds
+    setTimeout(() => {
+      document.getElementById('image2').classList.add('visible');
+    }, 1000);
+
+    // Replace image 2 with image 4 after 6 seconds when image 3 is shown
+    setTimeout(() => {
+      // Hide image 2
+      document.getElementById('image2').style.display = 'none';
+
+      // Show image 4 in the same place as image 2
+      document.getElementById('image3').style.display = 'block';
+      document.getElementById('image4').style.display = 'block';
+      document.getElementById('image3').classList.add('visible');
+      document.getElementById('image4').classList.add('visible');
+    }, 10000);
+  </script>
+</body>
+</html>

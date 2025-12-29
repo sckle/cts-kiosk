@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Viewer</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      font-family: Arial, sans-serif;
+    }
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+    #timer {
+      position: fixed;
+      bottom: 50px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.3);
+      user-select: none;
+      z-index: 1000;
+      line-height: 1.2;
+      max-width: 90vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="contentFrame" src=""></iframe>
+
+  <div id="timer" style="display:none;">
+    <div id="timerName" hidden></div>
+    <div id="timerSeconds"></div>
+  </div>
+
+  <script>
+    function getQueryParams() {
+      const params = {};
+      location.search.substring(1).split('&').forEach(pair => {
+        const [key, value] = pair.split('=');
+        if (key) params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+      });
+      return params;
+    }
+
+    const params = getQueryParams();
+    const iframe = document.getElementById('contentFrame');
+    const timer = document.getElementById('timer');
+    const timerName = document.getElementById('timerName');
+    const timerSeconds = document.getElementById('timerSeconds');
+
+    if (params.url) {
+      iframe.src = params.url;
+
+      if (params.name && params.duration) {
+        timer.style.display = 'block';
+        timerName.textContent = params.name;
+
+        let secondsLeft = parseInt(params.duration, 10);
+        if (isNaN(secondsLeft) || secondsLeft < 0) secondsLeft = 0;
+
+        function updateTimer() {
+          if (secondsLeft <= 0) {
+            timerSeconds.textContent = "...";
+            clearInterval(intervalId);
+          } else {
+            timerSeconds.textContent = `${secondsLeft}s remaining`;
+            secondsLeft--;
+          }
+        }
+
+        updateTimer();
+        const intervalId = setInterval(updateTimer, 1000);
+      }
+    } else {
+      // No URL provided
+      timer.style.display = 'none';
+      iframe.style.display = 'none';
+      document.body.style.color = '#fff';
+      document.body.style.fontSize = '24px';
+      document.body.style.display = 'flex';
+      document.body.style.justifyContent = 'center';
+      document.body.style.alignItems = 'center';
+      document.body.style.background = '#000';
+      document.body.textContent = 'No URL provided in query parameters.';
+    }
+  </script>
+</body>
+</html>

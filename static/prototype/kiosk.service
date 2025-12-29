@@ -1,0 +1,16 @@
+[Unit]
+Description=Chromium Kiosk Rotator
+After=graphical.target local-webserver.service
+Requires=local-webserver.service
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/cts/kiosk
+Environment=DISPLAY=:0
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+ExecStart=/home/pi/cts/kiosk/start-kiosk.sh
+Restart=on-failure
+
+[Install]
+WantedBy=graphical.target

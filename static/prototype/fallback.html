@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Offline Mode</title>
+  <style>
+    body {
+      background-color: #222;
+      color: #eee;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    h1 {
+      font-size: 3em;
+      color: #ff6b6b;
+    }
+  </style>
+
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const name = getQueryParam("name");
+      if (name) {
+        document.getElementById("page-name").textContent = decodeURIComponent(name);
+      }
+    });
+  </script>
+</head>
+<body>
+<h1>Dashboard Unavailable</h1>
+<p>Page: <strong id="page-name">Unknown</strong></p>
+<p>We're having trouble reaching the online dashboard.</p>
+</body>
+</html>
+

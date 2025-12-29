@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Greden garage</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 10px;
+      text-align: center;        /* center horizontally */
+      vertical-align: middle;    /* center vertically */
+      /* border: 1px solid #aaa; */
+    }
+    /* Add this to center the chart div inside td */
+    .chart-container {
+      width: 300px;
+      height: 300px;
+      display: inline-block;     /* allow centering */
+    }
+    /* Style for the image row */
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+<script src="/static/js/mqtt.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    const host = "populus-mqtt-dev2.safecity.axis.com";
+    const topic = [
+      "garage-1/p-free",
+      "garage-1/e-free",
+      "garage-2/p-free",
+      "garage-2/e-free",
+    ];
+
+    const labels = {
+      [topic[0]]: "Floor -1 - P",
+      [topic[1]]: "Floor -1 - EL",
+      [topic[2]]: "Floor -2 - P",
+      [topic[3]]: "Floor -2 - EL",
+    };
+
+    const jGarage = {
+      "garage-1": {
+        "p": {
+          "total": 25
+        },
+        "e": {
+          "total": 5
+        }
+      },
+      "garage-2": {
+        "p": {
+          "total": 37
+        },
+        "e": {
+          "total": 6
+        }
+      }
+    };
+
+    function notifyMQTTConnected(mqtt) {
+        console.log("connected!");
+        for (i = 0; i < topic.length; i++) {
+            console.log("subscribe ... " + topic[i]);
+            mqtt.subscribe(topic[i]);
+        }
+    }
+
+    function getTotal(text) {
+      // Check if text exists in topic array
+      if (!topic.includes(text)) {
+        return null; // or throw an error if needed
+      }
+
+      // Parse the text (e.g., "garage-1/p-free")
+      const parts = text.split('/');
+      if (parts.length < 2) return null;
+
+      const garage = parts[0];        // "garage-1"
+      const type = parts[1].split('-')[0];  // "p" from "p-free"
+
+      // Check if values exist in jGarage
+      if (
+        jGarage[garage] &&
+        jGarage[garage][type] &&
+        typeof jGarage[garage][type].total === 'number'
+      ) {
+        return jGarage[garage][type].total;
+      }
+
+      return null; // not found
+    }
+
+    function notifyMQTTMsgReceived(msg) {
+      const _topic = msg.destinationName;
+      const total = getTotal(_topic);
+
+      if ((total != null) && (msg.payloadString != "NaN")) {
+        const free = msg.payloadString;
+        const occupied = total - free;
+
+        const data =  {
+          element: _topic,
+          title: labels[_topic],
+          free: free,
+          occupied: occupied,
+          available: `${free} / ${total}`
+        }
+        showHalfDoughnutChart(data)
+      }
+
+    }
+</script>
+
+<body>
+  <table width="800" border=0>
+    <tr>
+      <td colspan="2">
+        <img src="/static/image/axis_logo.png"  style="float:left";>
+        <h1 style="float:left";>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grenden Garage</h1>
+      </td>
+    </tr>
+    <tr>
+      <td><div id="chartContainer1" class="chart-container"></div></td>
+      <td><div id="chartContainer2" class="chart-container"></div></td>
+    </tr>
+    <tr>
+      <td><div id="chartContainer3" class="chart-container"></div></td>
+      <td><div id="chartContainer4" class="chart-container"></div></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <img src="static/image/chart-legend.png" alt="Centered Image" />
+      </td>
+    </tr>
+  </table>
+
+  <script>
+    function showHalfDoughnutChart(j) {
+      var dom = document.getElementById(j.element);
+      var myChart = echarts.init(dom);
+
+      var option = {
+        title: {
+          text: j.title || 'World Population',
+          left: 'center',
+          top: '5%',
+          textStyle: {
+            fontWeight: 'bold',
+            fontSize: 18,
+            color: '#333'
+          }
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b}: {c}'
+        },
+        graphic: {
+          type: 'text',
+          left: 'center',
+          top: '18%',
+          style: {
+            text: 'Available: ' + (j.available || 0),
+            font: 'bold 16px sans-serif',
+            fill: '#4CAF50',
+            textAlign: 'center',
+          }
+        },
+        series: [
+          {
+            name: 'Population',
+            type: 'pie',
+            radius: ['40%', '70%'],
+            center: ['50%', '65%'],
+            startAngle: 180,
+            endAngle: 360,
+            avoidLabelOverlap: false,
+            label: {
+              show: true,
+              position: 'inside',
+              formatter: '{c}',
+              color: '#fff',
+              fontSize: 20,
+              fontWeight: 'bold'
+            },
+            data: [
+              { value: j.free || 0, name: 'Free', itemStyle: { color: '#4CAF50' } },
+              { value: j.occupied || 0, name: 'Occupied', itemStyle: { color: '#F44336' } }
+            ]
+          }
+        ]
+      };
+
+      myChart.setOption(option);
+    }
+
+    MQTTconnect();
+
+    // Change chartContainer id to topics
+    const oldIds = ['chartContainer1', 'chartContainer2', 'chartContainer3', 'chartContainer4'];
+    oldIds.forEach((oldId, index) => {
+      const element = document.getElementById(oldId);
+      if (element) {
+        element.id = topic[index];
+      }
+    });
+  </script>
+</body>
+</html>
