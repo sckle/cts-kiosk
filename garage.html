@@ -2,40 +2,49 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Greden garage</title>
+  <title>Grenden Garage</title>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  <script src="/static/js/mqtt.js"></script>
   <style>
-    table {
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
       margin: 20px auto;
-      border-collapse: collapse;
+      text-align: center;
     }
-    td {
-      padding: 10px;
-      text-align: center;        /* center horizontally */
-      vertical-align: middle;    /* center vertically */
-      /* border: 1px solid #aaa; */
-    }
-    /* Add this to center the chart div inside td */
-    .chart-container {
-      width: 300px;
-      height: 300px;
-      display: inline-block;     /* allow centering */
-    }
-    /* Style for the image row */
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
+    #chartContainer {
+      width: 800px;
+      height: 450px;
       margin: 0 auto;
+    }
+    img.logo {
+      float: left;
+      height: 60px;
+    }
+    #garageTitle {
+      margin-left: 50px; /* move left/right as needed */
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    .clearfix::after {
+      content: "";
+      clear: both;
+      display: table;
     }
   </style>
 </head>
+<body>
+  <div class="clearfix">
+    <img src="/static/image/axis_logo.png" alt="Axis Logo" class="logo" />
+    <h1 id="garageTitle">Grenden Garage</h1>
+  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
-<script src="/static/js/mqtt.js" type="text/javascript"></script>
+  <div id="chartContainer"></div>
 
-<script type="text/javascript">
+  <script>
     const host = "populus-mqtt-dev2.safecity.axis.com";
+
     const topic = [
       "garage-1/p-free",
       "garage-1/e-free",
@@ -44,177 +53,166 @@
     ];
 
     const labels = {
-      [topic[0]]: "Floor -1 - P",
-      [topic[1]]: "Floor -1 - EL",
-      [topic[2]]: "Floor -2 - P",
-      [topic[3]]: "Floor -2 - EL",
+      "garage-1/p-free": "Floor -1 - P",
+      "garage-1/e-free": "Floor -1 - EL",
+      "garage-2/p-free": "Floor -2 - P",
+      "garage-2/e-free": "Floor -2 - EL",
     };
 
     const jGarage = {
       "garage-1": {
-        "p": {
-          "total": 25
-        },
-        "e": {
-          "total": 5
-        }
+        "p": { total: 25 },
+        "e": { total: 5 }
       },
       "garage-2": {
-        "p": {
-          "total": 37
-        },
-        "e": {
-          "total": 6
-        }
+        "p": { total: 37 },
+        "e": { total: 6 }
       }
     };
 
-    function notifyMQTTConnected(mqtt) {
-        console.log("connected!");
-        for (i = 0; i < topic.length; i++) {
-            console.log("subscribe ... " + topic[i]);
-            mqtt.subscribe(topic[i]);
+    const parkingData = {
+      "garage-1/p-free": { free: 0, occupied: 0 },
+      "garage-1/e-free": { free: 0, occupied: 0 },
+      "garage-2/p-free": { free: 0, occupied: 0 },
+      "garage-2/e-free": { free: 0, occupied: 0 },
+    };
+
+    const chart = echarts.init(document.getElementById('chartContainer'));
+
+    const option = {
+      title: {
+        text: 'Parking Availability by Floor',
+        left: 'center',
+        top: 20,
+        textStyle: {
+          fontWeight: 'bold',
+          fontSize: 22
         }
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'shadow' },
+        formatter: params => {
+          let result = params[0].axisValue + '<br/>';
+          params.forEach(item => {
+            result += `<span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${item.color};"></span>`;
+            result += `${item.seriesName}: ${item.data}<br/>`;
+          });
+          return result;
+        }
+      },
+      legend: {
+        data: ['Free', 'Occupied'],
+        bottom: 10,
+        textStyle: { fontSize: 16 }
+      },
+      grid: {
+        left: 70,
+        right: 40,
+        bottom: 70,
+        top: 80,
+        containLabel: true
+      },
+      xAxis: {
+        type: 'category',
+        data: Object.values(labels),
+        axisLabel: { fontSize: 14 }
+      },
+      yAxis: {
+        type: 'value',
+        name: 'Spaces',
+        min: 0,
+        axisLabel: { fontSize: 14 },
+        nameTextStyle: { fontWeight: 'bold' }
+      },
+      series: [
+        {
+          name: 'Free',
+          type: 'bar',
+          stack: 'total',
+          itemStyle: { color: '#4CAF50' },
+          label: {
+            show: true,
+            position: 'inside',
+            formatter: params => params.value === 0 ? '' : params.value,
+            fontWeight: 'bold',
+            color: '#fff'
+          },
+          data: []
+        },
+        {
+          name: 'Occupied',
+          type: 'bar',
+          stack: 'total',
+          itemStyle: { color: '#F44336' },
+          label: {
+            show: true,
+            position: 'inside',
+            formatter: params => params.value === 0 ? '' : params.value,
+            fontWeight: 'bold',
+            color: '#fff'
+          },
+          data: []
+        }
+      ]
+    };
+
+    chart.setOption(option);
+
+    function getTotalFromTopic(tpc) {
+      const parts = tpc.split('/');
+      if (parts.length < 2) return 0;
+      const garage = parts[0];
+      const type = parts[1].split('-')[0];
+      return (jGarage[garage] && jGarage[garage][type]) ? jGarage[garage][type].total : 0;
     }
 
-    function getTotal(text) {
-      // Check if text exists in topic array
-      if (!topic.includes(text)) {
-        return null; // or throw an error if needed
-      }
+    function updateChart() {
+      const freeData = [];
+      const occupiedData = [];
+      topic.forEach(tpc => {
+        const free = parkingData[tpc].free || 0;
+        const total = getTotalFromTopic(tpc);
+        const occupied = total - free;
+        freeData.push(free);
+        occupiedData.push(occupied);
+      });
 
-      // Parse the text (e.g., "garage-1/p-free")
-      const parts = text.split('/');
-      if (parts.length < 2) return null;
+      chart.setOption({
+        series: [
+          { data: freeData },
+          { data: occupiedData }
+        ]
+      });
+    }
 
-      const garage = parts[0];        // "garage-1"
-      const type = parts[1].split('-')[0];  // "p" from "p-free"
-
-      // Check if values exist in jGarage
-      if (
-        jGarage[garage] &&
-        jGarage[garage][type] &&
-        typeof jGarage[garage][type].total === 'number'
-      ) {
-        return jGarage[garage][type].total;
-      }
-
-      return null; // not found
+    function notifyMQTTConnected(mqtt) {
+      console.log('MQTT connected');
+      topic.forEach(tpc => mqtt.subscribe(tpc));
     }
 
     function notifyMQTTMsgReceived(msg) {
-      const _topic = msg.destinationName;
-      const total = getTotal(_topic);
+      const tpc = msg.destinationName;
+      const payload = msg.payloadString;
 
-      if ((total != null) && (msg.payloadString != "NaN")) {
-        const free = msg.payloadString;
-        const occupied = total - free;
+      if (!topic.includes(tpc)) return;
 
-        const data =  {
-          element: _topic,
-          title: labels[_topic],
-          free: free,
-          occupied: occupied,
-          available: `${free} / ${total}`
-        }
-        showHalfDoughnutChart(data)
+      const total = getTotalFromTopic(tpc);
+      let freeCount = Number(payload);
+      if (isNaN(freeCount) || freeCount > total || freeCount < 0) {
+        console.warn(`Invalid free count for ${tpc}: ${payload}`);
+        return;
       }
 
-    }
-</script>
-
-<body>
-  <table width="800" border=0>
-    <tr>
-      <td colspan="2">
-        <img src="/static/image/axis_logo.png"  style="float:left";>
-        <h1 style="float:left";>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grenden Garage</h1>
-      </td>
-    </tr>
-    <tr>
-      <td><div id="chartContainer1" class="chart-container"></div></td>
-      <td><div id="chartContainer2" class="chart-container"></div></td>
-    </tr>
-    <tr>
-      <td><div id="chartContainer3" class="chart-container"></div></td>
-      <td><div id="chartContainer4" class="chart-container"></div></td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <img src="static/image/chart-legend.png" alt="Centered Image" />
-      </td>
-    </tr>
-  </table>
-
-  <script>
-    function showHalfDoughnutChart(j) {
-      var dom = document.getElementById(j.element);
-      var myChart = echarts.init(dom);
-
-      var option = {
-        title: {
-          text: j.title || 'World Population',
-          left: 'center',
-          top: '5%',
-          textStyle: {
-            fontWeight: 'bold',
-            fontSize: 18,
-            color: '#333'
-          }
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{b}: {c}'
-        },
-        graphic: {
-          type: 'text',
-          left: 'center',
-          top: '18%',
-          style: {
-            text: 'Available: ' + (j.available || 0),
-            font: 'bold 16px sans-serif',
-            fill: '#4CAF50',
-            textAlign: 'center',
-          }
-        },
-        series: [
-          {
-            name: 'Population',
-            type: 'pie',
-            radius: ['40%', '70%'],
-            center: ['50%', '65%'],
-            startAngle: 180,
-            endAngle: 360,
-            avoidLabelOverlap: false,
-            label: {
-              show: true,
-              position: 'inside',
-              formatter: '{c}',
-              color: '#fff',
-              fontSize: 20,
-              fontWeight: 'bold'
-            },
-            data: [
-              { value: j.free || 0, name: 'Free', itemStyle: { color: '#4CAF50' } },
-              { value: j.occupied || 0, name: 'Occupied', itemStyle: { color: '#F44336' } }
-            ]
-          }
-        ]
+      parkingData[tpc] = {
+        free: freeCount,
+        occupied: total - freeCount
       };
 
-      myChart.setOption(option);
+      updateChart();
     }
 
     MQTTconnect();
-
-    // Change chartContainer id to topics
-    const oldIds = ['chartContainer1', 'chartContainer2', 'chartContainer3', 'chartContainer4'];
-    oldIds.forEach((oldId, index) => {
-      const element = document.getElementById(oldId);
-      if (element) {
-        element.id = topic[index];
-      }
-    });
   </script>
 </body>
 </html>
