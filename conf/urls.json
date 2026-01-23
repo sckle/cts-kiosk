@@ -22,11 +22,16 @@
   {
     "name": "off-grid period",
     "url": "http://eb-off-grid-env.eba-jmuimcgg.us-east-1.elasticbeanstalk.com/kiosk?show=period",
-    "duration": 30
+    "duration": 0
   },
   {
     "name": "off-grid daily",
     "url": "http://eb-off-grid-env.eba-jmuimcgg.us-east-1.elasticbeanstalk.com/kiosk?show=daily",
+    "duration": 0
+  },
+  {
+    "name": "CTS - Thermometer",
+    "url": "/thermometer.html",
     "duration": 30
   },
   {

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CTS - Thermometer</title>
+
+  <!-- ECharts -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+
+  <!-- MQTT -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  <script src="/static/js/mqtt.js"></script>
+
+  <style>
+    table {
+      margin: 20px auto;
+      border-collapse: collapse;
+    }
+    td {
+      padding: 10px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .chart-container {
+      width: 340px;
+      height: 260px;
+      display: inline-block;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+<table width="800">
+  <tr>
+    <td colspan="2">
+      <img src="/static/image/axis_logo.png" style="float:left;">
+      <h1 style="float:left; margin-left:100px;">CTS - Thermometer</h1>
+    </td>
+  </tr>
+
+  <tr><td colspan="2">&nbsp;</td></tr>
+
+  <tr>
+    <td><div id="pi-zero/cts/lab/temperature" class="chart-container"></div></td>
+    <td><div id="pi-off-grid/smartshunt" class="chart-container"></div></td>
+  </tr>
+</table>
+
+<script>
+/* ================= MQTT CONFIG ================= */
+
+const host = "populus-mqtt.safecity.axis.com";
+
+const topic = [
+  "pi-zero/cts/lab/temperature",
+  "pi-off-grid/smartshunt"
+];
+
+const labels = {
+  "pi-zero/cts/lab/temperature": "CTS Lab (M5)",
+  "pi-off-grid/smartshunt": "HQ - Ambient"
+};
+
+/* ================= TEMP CONFIG (UPDATED) ================= */
+
+const tempConfig = {
+  "pi-zero/cts/lab/temperature": {
+    min: 15,
+    max: 30,
+    zones: [
+      { value: 20, color: "#2196F3" }, // Cold
+      { value: 25, color: "#4CAF50" }, // Normal
+      { value: 30, color: "#F44336" }  // Hot
+    ]
+  },
+
+  "pi-off-grid/smartshunt": {
+    min: -10,
+    max: 35,
+    zones: [
+      { value: 15, color: "#2196F3" }, // Cold
+      { value: 25, color: "#4CAF50" }, // Green
+      { value: 35, color: "#F44336" }  // Hot
+    ]
+  }
+};
+
+/* ================= MQTT CALLBACKS ================= */
+
+function notifyMQTTConnected(mqtt) {
+  console.log("MQTT connected");
+  topic.forEach(t => mqtt.subscribe(t));
+}
+
+function notifyMQTTMsgReceived(msg) {
+  const tpc = msg.destinationName;
+  const data = JSON.parse(msg.payloadString);
+  const temperature = data.ambientTemperature.value;
+
+  showTemperatureGauge({
+    element: tpc,
+    title: labels[tpc],
+    temperature: temperature
+  });
+}
+
+/* ================= HELPERS ================= */
+
+// Determine active zone color
+function getNeedleColor(value, zones) {
+  for (let i = 0; i < zones.length; i++) {
+    if (value <= zones[i].value) {
+      return zones[i].color;
+    }
+  }
+  return zones[zones.length - 1].color;
+}
+
+/* ================= GAUGE CHART ================= */
+
+function showTemperatureGauge(j) {
+  const cfg = tempConfig[j.element];
+  if (!cfg) return;
+
+  const min = cfg.min;
+  const max = cfg.max;
+
+  const value = Number(
+    Math.max(min, Math.min(max, j.temperature)).toFixed(1)
+  );
+
+  const needleColor = getNeedleColor(value, cfg.zones);
+
+  const chart = echarts.init(document.getElementById(j.element));
+
+  chart.setOption({
+    title: {
+      text: j.title,
+      left: "center",
+      top: "5%",
+      textStyle: {
+        fontSize: 18,
+        fontWeight: "bold"
+      }
+    },
+
+    series: [{
+      type: "gauge",
+      min: min,
+      max: max,
+      startAngle: 180,
+      endAngle: 0,
+      radius: "90%",
+      center: ["50%", "65%"],
+
+      axisLine: {
+        lineStyle: {
+          width: 15,
+          color: cfg.zones.map(z => [
+            (z.value - min) / (max - min),
+            z.color
+          ])
+        }
+      },
+
+      pointer: {
+        length: "70%",
+        width: 6,
+        itemStyle: {
+          color: needleColor
+        }
+      },
+
+      axisTick: {
+        length: 8,
+        lineStyle: { color: "#999" }
+      },
+
+      splitLine: {
+        length: 14,
+        lineStyle: { color: "#999" }
+      },
+
+      axisLabel: {
+        fontSize: 12
+      },
+
+      detail: {
+        valueAnimation: true,
+        formatter: function (val) {
+          return val.toFixed(1) + " °C";
+        },
+        fontSize: 22,
+        offsetCenter: [0, "20%"],
+        color: needleColor
+      },
+
+      data: [{
+        value: value
+      }]
+    }]
+  });
+}
+
+/* ================= START MQTT ================= */
+
+MQTTconnect();
+</script>
+</body>
+</html>
