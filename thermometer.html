@@ -47,7 +47,7 @@
   <tr><td colspan="2">&nbsp;</td></tr>
 
   <tr>
-    <td><div id="pi-zero/cts/lab/temperature" class="chart-container"></div></td>
+    <td><div id="pi-zero-cts-lab/cts/lab/temperature" class="chart-container"></div></td>
     <td><div id="pi-off-grid/smartshunt" class="chart-container"></div></td>
   </tr>
 </table>
@@ -58,19 +58,19 @@
 const host = "populus-mqtt.safecity.axis.com";
 
 const topic = [
-  "pi-zero/cts/lab/temperature",
+  "pi-zero-cts-lab/cts/lab/temperature",
   "pi-off-grid/smartshunt"
 ];
 
 const labels = {
-  "pi-zero/cts/lab/temperature": "CTS Lab (M5)",
+  "pi-zero-cts-lab/cts/lab/temperature": "CTS Lab (M5)",
   "pi-off-grid/smartshunt": "HQ - Ambient"
 };
 
 /* ================= TEMP CONFIG (UPDATED) ================= */
 
 const tempConfig = {
-  "pi-zero/cts/lab/temperature": {
+  "pi-zero-cts-lab/cts/lab/temperature": {
     min: 15,
     max: 30,
     zones: [
