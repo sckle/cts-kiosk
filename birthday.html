@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loading...</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f9f9f9;
+      color: #0B2D5C;
+    }
+
+    body.birthday {
+      background: linear-gradient(180deg, #004A99 0%, #FFD966 100%);
+    }
+
+    h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 25px;
+      color: #FFFFFF;
+      text-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .message {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      color: #2F6FD6; /* lighter blue */
+    }
+
+    .name {
+      display: block;
+      font-size: 1.6em;
+      font-weight: 800;
+      color: #003366;
+      margin: 8px 0;
+    }
+
+    .quote {
+      font-size: 20px;
+      font-style: italic;
+      color: #1F3C88;
+    }
+
+    body.birthday .message,
+    body.birthday .quote {
+      background: rgba(255, 255, 255, 0.75);
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 12px;
+      margin-top: 15px;
+    }
+
+    .birthday-image {
+      max-width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="pageTitle">Loading...</h1>
+
+  <div id="imageContainer"></div>
+  <div id="birthdayMessage" class="message"></div><br>
+  <div id="quoteContainer" class="quote"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    var fireworksInterval = null;
+
+    function updatePageTitleWithTime(text) {
+      document.title = text;
+      document.getElementById("pageTitle").innerHTML = text;
+    }
+
+    function fetchBirthdayData(url, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
+
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            callback(JSON.parse(xhr.responseText));
+          } else {
+            callback({ birthdays: [], images: [], titles: [], quotes: [] });
+          }
+        }
+      };
+      xhr.send();
+    }
+
+    function pickRandomItem(arr) {
+      if (!arr || arr.length === 0) return null;
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function isBirthdayToday(birthdays) {
+      var today = new Date();
+      var m = today.getMonth() + 1;
+      var d = today.getDate();
+
+      for (var i = 0; i < birthdays.length; i++) {
+        if (birthdays[i].month === m && birthdays[i].day === d) {
+          return birthdays[i].name;
+        }
+      }
+      return null;
+    }
+
+    function showRandomImage(images) {
+      if (!images || images.length === 0) return;
+
+      var c = document.getElementById("imageContainer");
+      c.innerHTML = "";
+
+      var img = document.createElement("img");
+      img.src = pickRandomItem(images);
+      img.className = "birthday-image";
+      c.appendChild(img);
+    }
+
+    function startFireworks() {
+      if (fireworksInterval) return;
+
+      fireworksInterval = setInterval(function () {
+        confetti({
+          particleCount: 120,
+          spread: 80,
+          origin: { x: Math.random(), y: 0.6 }
+        });
+      }, 3000);
+    }
+
+    function stopFireworks() {
+      if (fireworksInterval) {
+        clearInterval(fireworksInterval);
+        fireworksInterval = null;
+      }
+    }
+
+    function getNameFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('name') || 'Friend';
+    }
+
+    function displayBirthdayPage(url) {
+      fetchBirthdayData(url, function (data) {
+
+        var title = pickRandomItem(data.titles) || "Celebrate Birthdays!";
+        updatePageTitleWithTime(title);
+
+        // var name = isBirthdayToday(data.birthdays);
+        var name = getNameFromUrl();
+        var msg = document.getElementById("birthdayMessage");
+        var quote = document.getElementById("quoteContainer");
+
+        if (name) {
+          document.body.className = "birthday";
+          showRandomImage(data.images);
+
+          msg.innerHTML =
+            "🎉 Happy Birthday" +
+            "<span class='name'>" + name + "</span>" +
+            "Hope you have an amazing day! 🎂";
+
+          quote.innerHTML = pickRandomItem(data.quotes) || "";
+          startFireworks();
+        } else {
+          document.body.className = "";
+          msg.innerHTML = "No birthdays today.";
+          quote.innerHTML = "";
+          document.getElementById("imageContainer").innerHTML = "";
+          stopFireworks();
+        }
+      });
+    }
+
+    displayBirthdayPage("conf/birthday.json");
+  </script>
+</body>
+</html>

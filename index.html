@@ -15,9 +15,9 @@
     /* Info bar on bottom-left */
     #infoBar {
       position: absolute;
-      bottom: 5px;  /* 👈 moved to bottom */
-      left: 50%;    /* 👈 stay on left */
-      transform: translateX(-50%); /* Shifts it back by half its width */
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
       background-color: rgba(0, 0, 0, 0.6);
       padding: 8px 12px;
       border-radius: 5px;
@@ -51,7 +51,6 @@
     let currentIndex = 0;
     let rotationTimeout = null;
     let countdownInterval = null;
-    let counter = 0;
 
     const urlNameEl = document.getElementById('urlName');
     const timerDisplayEl = document.getElementById('timerDisplay');
@@ -59,14 +58,11 @@
 
     function getCurrentTime() {
         const now = new Date();
-        const year = now.getFullYear();
-        const month = now.getMonth() + 1; // Months are zero-based
         const day = now.getDate();
+        const month = now.getMonth() + 1;
         const hours = now.getHours();
         const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0')
-
-        return (`${day}/${month} ${hours}:${minutes}`);
+        return `${day}/${month} ${hours}:${minutes}`;
     }
 
     function showTimer(seconds) {
@@ -87,9 +83,7 @@
     function rotateToNextUrl() {
       if (!urls.length) return;
 
-      if (currentIndex >= urls.length) {
-        currentIndex = 0;
-      }
+      if (currentIndex >= urls.length) currentIndex = 0;
 
       const { name, url, duration } = urls[currentIndex];
       urlNameEl.textContent = `${name}`;
@@ -105,25 +99,49 @@
 
     async function startRotation() {
       try {
+        // Load URL list
         const response = await fetch('conf/urls.json');
         urls = await response.json();
+
+        // Load birthday data
+        const birthdayResp = await fetch('conf/birthday.json');
+        const birthdayData = await birthdayResp.json();
+
+        const today = new Date();
+        const m = today.getMonth() + 1;
+        const d = today.getDate();
+
+        // Find all birthdays today
+        const birthdaysToday = birthdayData.birthdays.filter(b => b.month === m && b.day === d);
+
+        // Add each birthday to urls with query param
+        birthdaysToday.forEach(b => {
+          urls.push({
+            name: b.name,
+            url: `/birthday.html?name=${encodeURIComponent(b.name)}`,
+            duration: 20
+          });
+        });
 
         if (!Array.isArray(urls) || urls.length === 0) {
           urlNameEl.textContent = 'No URLs found.';
           return;
         }
 
+        console.log(birthdaysToday)
+        console.log(urls)
+
         rotateToNextUrl();
       } catch (error) {
-        console.error('Failed to load URL list:', error);
-        urlNameEl.textContent = 'Failed to load URLs.';
+        console.error('Failed to load URL list or birthday data:', error);
+        urlNameEl.textContent = 'Failed to load URLs or birthdays.';
       }
     }
 
     document.title = `off-grid ${getCurrentTime()}`;
     startRotation();
 
-    // Reload after 1 hours
+    // Reload after 1 hour
     setTimeout(function() {
       location.reload();
     }, 1 * 60 * 60 * 1000);
