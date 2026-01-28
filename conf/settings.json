@@ -4,7 +4,9 @@
         "broker": "populus-mqtt.safecity.axis.com",
         "port": 1883,
         "username": "cts",
-        "password": "systems",
+        "password": "systems"
+    },
+    "heartbeat": {
         "topic": "heartbeat",
         "interval": 600
     }
