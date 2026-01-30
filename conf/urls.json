@@ -21,12 +21,12 @@
   },
   {
     "name": "off-grid period",
-    "url": "http://eb-off-grid-env.eba-jmuimcgg.us-east-1.elasticbeanstalk.com/kiosk?show=period",
+    "url": "https://off-grid.safecity.axis.com/kiosk?show=period",
     "duration": 30
   },
   {
     "name": "off-grid daily",
-    "url": "http://eb-off-grid-env.eba-jmuimcgg.us-east-1.elasticbeanstalk.com/kiosk?show=daily",
+    "url": "https://off-grid.safecity.axis.com/kiosk?show=daily",
     "duration": 0
   },
   {
