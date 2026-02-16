@@ -3,10 +3,10 @@ Description=Local python webserver
 After=network.target
 
 [Service]
-ExecStart=python3 -m http.server 8080
+ExecStart=python3 -m http.server 80
 Restart=always
 RestartSec=5
-User=pi
+#User=pi
 #Environment=DISPLAY=:0
 WorkingDirectory=/home/pi/cts/kiosk
 
