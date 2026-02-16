@@ -27,7 +27,7 @@
   {
     "name": "off-grid daily",
     "url": "https://off-grid.safecity.axis.com/kiosk?show=daily",
-    "duration": 0
+    "duration": 30
   },
   {
     "name": "CTS - Thermometer",
