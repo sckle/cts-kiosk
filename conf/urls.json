@@ -15,6 +15,11 @@
     "duration": 0
   },
   {
+    "name": "CTS - Thermometer",
+    "url": "/thermometer.html",
+    "duration": 30
+  },
+  {
     "name": "Bullet time video",
     "url": "/bullettime.html",
     "duration": 45
@@ -30,24 +35,19 @@
     "duration": 30
   },
   {
-    "name": "CTS - Thermometer",
-    "url": "/thermometer.html",
-    "duration": 30
-  },
-  {
     "name": "Lomma Beachcam",
     "url": "https://camstreamer.com/embed/BFcEJ39c2RS6mMI6oXKZFUwQkF5s4XR2WchDVRc5?vq=hd1080",
-    "duration": 60
+    "duration": 45
   },
   {
     "name": "Habo Ljung Webcamera Zoom",
     "url": "https://camstreamer.com/embed/M685pBUOm8BHwhpuNBC0aLOsnu5HyT1zbu91lvk5?vq=hd1080",
-    "duration": 60
+    "duration": 45
   },
   {
     "name": "Habo Ljung Webcamera Panaroma",
     "url": "https://camstreamer.com/embed/w7n8z0DJiEyOfAccMWH9jLP4vLhGR7argrcYGD0m?vq=hd1080",
-    "duration": 60
+    "duration": 45
   },
   {
     "name": "Grenden Gym",
