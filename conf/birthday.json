@@ -1,14 +1,15 @@
 {
   "birthdays": [
-    { "name": "Jenny", "month": 3, "day": 8 },
     { "name": "Joakim", "month": 3, "day": 23 },
     { "name": "Ralph", "month": 3, "day": 31 },
     { "name": "Erik", "month": 4, "day": 17 },
     { "name": "Anand", "month": 4, "day": 25 },
     { "name": "Mikael", "month": 5, "day": 1 },
     { "name": "Anil", "month": 5, "day": 7 },
-    { "name": "Måns", "month": 5, "day": 9 },
-    { "name": "Jon", "month": 5, "day": 24 },
+    { "name": "Måns", "month": 5, "day": 8 },
+    { "name": "Måns_", "month": 5, "day": 9 },
+    { "name": "Jon", "month": 5, "day": 25 },
+    { "name": "Jon_", "month": 5, "day": 24 },
     { "name": "Shubh", "month": 5, "day": 27 },
     { "name": "Kiet", "month": 6, "day": 3 },
     { "name": "Axel", "month": 9, "day": 3 },
