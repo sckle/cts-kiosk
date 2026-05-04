@@ -26,12 +26,12 @@
   },
   {
     "name": "off-grid period",
-    "url": "https://off-grid.safecity.axis.com/kiosk?show=period",
+    "url": "https://off-grid.cts.axis.cloud/kiosk?show=period",
     "duration": 30
   },
   {
     "name": "off-grid daily",
-    "url": "https://off-grid.safecity.axis.com/kiosk?show=daily",
+    "url": "https://off-grid.cts.axis.cloud/kiosk?show=daily",
     "duration": 30
   },
   {
