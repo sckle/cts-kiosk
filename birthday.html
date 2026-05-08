@@ -104,17 +104,38 @@
       return arr[Math.floor(Math.random() * arr.length)];
     }
 
-    function isBirthdayToday(birthdays) {
+    function getBirthdaysToShow(birthdays) {
       var today = new Date();
-      var m = today.getMonth() + 1;
-      var d = today.getDate();
+      var dow = today.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
+      var names = [];
 
-      for (var i = 0; i < birthdays.length; i++) {
-        if (birthdays[i].month === m && birthdays[i].day === d) {
-          return birthdays[i].name;
+      function collectNames(date) {
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        for (var i = 0; i < birthdays.length; i++) {
+          if (birthdays[i].month === m && birthdays[i].day === d) {
+            names.push(birthdays[i].name);
+          }
         }
       }
-      return null;
+
+      collectNames(today);
+
+      // Friday: also include coming Saturday
+      if (dow === 5) {
+        var sat = new Date(today);
+        sat.setDate(sat.getDate() + 1);
+        collectNames(sat);
+      }
+
+      // Monday: also include past Sunday
+      if (dow === 1) {
+        var sun = new Date(today);
+        sun.setDate(sun.getDate() - 1);
+        collectNames(sun);
+      }
+
+      return names;
     }
 
     function showRandomImage(images) {
@@ -159,18 +180,21 @@
         var title = pickRandomItem(data.titles) || "Celebrate Birthdays!";
         updatePageTitleWithTime(title);
 
-        // var name = isBirthdayToday(data.birthdays);
-        var name = getNameFromUrl();
+        var urlName = new URLSearchParams(window.location.search).get('name');
+        var names = urlName ? [urlName] : getBirthdaysToShow(data.birthdays);
         var msg = document.getElementById("birthdayMessage");
         var quote = document.getElementById("quoteContainer");
 
-        if (name) {
+        if (names.length > 0) {
           document.body.className = "birthday";
           showRandomImage(data.images);
 
+          var namesHtml = names.map(function (n) {
+            return "<span class='name'>" + n + "</span>";
+          }).join("");
           msg.innerHTML =
             "🎉 Happy Birthday" +
-            "<span class='name'>" + name + "</span>" +
+            namesHtml +
             "Hope you have an amazing day! 🎂";
 
           quote.innerHTML = pickRandomItem(data.quotes) || "";

@@ -108,16 +108,39 @@
         const birthdayData = await birthdayResp.json();
 
         const today = new Date();
-        const m = today.getMonth() + 1;
-        const d = today.getDate();
+        const dow = today.getDay(); // 0=Sun, 1=Mon, 5=Fri, 6=Sat
+        const dowNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-        // Find all birthdays today
-        const birthdaysToday = birthdayData.birthdays.filter(b => b.month === m && b.day === d);
+        const datesToCheck = [today];
 
-        // Add each birthday to urls with query param
+        // Friday: also check coming Saturday
+        if (dow === 5) {
+          const sat = new Date(today);
+          sat.setDate(sat.getDate() + 1);
+          datesToCheck.push(sat);
+        }
+
+        // Monday: also check past Sunday
+        if (dow === 1) {
+          const sun = new Date(today);
+          sun.setDate(sun.getDate() - 1);
+          datesToCheck.push(sun);
+        }
+
+        console.log(`[Birthday] Today: ${dowNames[dow]} ${today.getDate()}/${today.getMonth()+1}`);
+        console.log(`[Birthday] Checking dates:`, datesToCheck.map(d => `${dowNames[d.getDay()]} ${d.getDate()}/${d.getMonth()+1}`));
+
+        // Find all birthdays for the dates to check
+        const birthdaysToday = birthdayData.birthdays.filter(b =>
+          datesToCheck.some(date => b.month === date.getMonth() + 1 && b.day === date.getDate())
+        );
+
+        console.log(`[Birthday] Matches found:`, birthdaysToday.length ? birthdaysToday.map(b => `${b.name} (${b.day}/${b.month})`) : 'none');
+
+        // Add one URL per birthday person at the top of the list
         birthdaysToday.forEach(b => {
-          urls.push({
-            name: b.name,
+          urls.unshift({
+            name: `🎂 ${b.name}`,
             url: `/birthday.html?name=${encodeURIComponent(b.name)}`,
             duration: 20
           });
@@ -128,8 +151,8 @@
           return;
         }
 
-        console.log(birthdaysToday)
-        console.log(urls)
+        console.log(`[Birthday] Final URL list:`, urls.map(u => `${u.name} -> ${u.url} (${u.duration}s)`))
+        console.log(`[Birthday] urls:`, urls)
 
         rotateToNextUrl();
       } catch (error) {
