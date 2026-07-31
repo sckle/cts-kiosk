@@ -63,5 +63,10 @@
     "name": "Grenden Gym Stats",
     "url": "https://gym.safecity.axis.com/statistics",
     "duration": 30
+  },
+  {
+    "name": "VAPIX command line tool and library",
+    "url": "/vapix.html",
+    "duration": 65
   }
 ]
