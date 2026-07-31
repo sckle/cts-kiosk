@@ -15,6 +15,11 @@
     "duration": 0
   },
   {
+    "name": "Industry 4.0",
+    "url": "/I4.html",
+    "duration": 65
+  },
+  {
     "name": "CTS - Thermometer",
     "url": "/thermometer.html",
     "duration": 30
