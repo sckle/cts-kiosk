@@ -27,7 +27,7 @@
   {
     "name": "Bullet time video",
     "url": "/bullettime.html",
-    "duration": 45
+    "duration": 42
   },
   {
     "name": "off-grid period",
@@ -42,17 +42,17 @@
   {
     "name": "Lomma Beachcam",
     "url": "https://camstreamer.com/embed/tXbKOdnKh6MHFRhwZVhuAsO8UBa9DTFzqnz6U4Xn?vq=hd1080",
-    "duration": 45
+    "duration": 30
   },
   {
     "name": "Habo Ljung Webcamera Zoom",
     "url": "https://camstreamer.com/embed/M685pBUOm8BHwhpuNBC0aLOsnu5HyT1zbu91lvk5?vq=hd1080",
-    "duration": 45
+    "duration": 30
   },
   {
     "name": "Habo Ljung Webcamera Panaroma",
     "url": "https://camstreamer.com/embed/G7c2RoeaCgBSu9hdafGzw5ls8jIGSXmsfMfPrPtq?vq=hd1080",
-    "duration": 45
+    "duration": 30
   },
   {
     "name": "Grenden Gym",
@@ -72,6 +72,6 @@
   {
     "name": "VAPIX command line tool and library",
     "url": "/vapix.html",
-    "duration": 65
+    "duration": 45
   }
 ]
