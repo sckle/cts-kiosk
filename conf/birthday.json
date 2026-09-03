@@ -1,5 +1,6 @@
 {
   "birthdays": [
+    { "name": "Magnus", "month": 1, "day": 20 },
     { "name": "Joakim", "month": 3, "day": 23 },
     { "name": "Ralph", "month": 3, "day": 31 },
     { "name": "Erik", "month": 4, "day": 17 },
