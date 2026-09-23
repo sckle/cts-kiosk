@@ -5,19 +5,9 @@
     "duration": 0
   },
   {
-    "name": "Grenden Conference Room",
-    "url": "https://axis-maps.safecity.axis.com/?room=Malala",
-    "duration": 0
-  },
-  {
-    "name": "Grenden M7RoofLab",
-    "url": "http://172.29.171.68/axis-cgi/media.cgi?camera=1&videoframeskipmode=empty&videozprofile=classic&resolution=1920x1080&audio=0&audiocodec=aac&audiosamplerate=16000&audiobitrate=32000&timestamp=1763461500098&videocodec=h264&container=mp4",
-    "duration": 0
-  },
-  {
-    "name": "Industry 4.0",
-    "url": "/I4.html",
-    "duration": 65
+    "name": "Nathiko",
+    "url": "/nathiko.html",
+    "duration": 62
   },
   {
     "name": "CTS - Thermometer",
@@ -38,6 +28,11 @@
     "name": "off-grid daily",
     "url": "https://off-grid.cts.axis.cloud/kiosk?show=daily",
     "duration": 30
+  },
+  {
+    "name": "Industry 4.0",
+    "url": "/I4.html",
+    "duration": 65
   },
   {
     "name": "Lomma Beachcam",
