@@ -1,6 +1,6 @@
 {
   "birthdays": [
-    { "name": "Magnus", "month": 1, "day": 20 },
+    { "name": "M (MI6)", "month": 1, "day": 20 },
     { "name": "Joakim", "month": 3, "day": 23 },
     { "name": "Ralph", "month": 3, "day": 31 },
     { "name": "Erik", "month": 4, "day": 17 },
@@ -11,6 +11,7 @@
     { "name": "Jon", "month": 5, "day": 24 },
     { "name": "Shubh", "month": 5, "day": 27 },
     { "name": "Kiet", "month": 6, "day": 3 },
+    { "name": "Asmae", "month": 8, "day": 25 },
     { "name": "Axel", "month": 9, "day": 3 },
     { "name": "Mustafa", "month": 9, "day": 6 },
     { "name": "Ahmed", "month": 9, "day": 13 },
