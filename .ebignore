@@ -1,0 +1,17 @@
+# Files excluded from Elastic Beanstalk deployments (eb deploy)
+.git/
+.gitignore
+**/__pycache__/
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# Raspberry Pi specific files
+weblib
+heartbeat.service
+kiosk-webserver.service
+start-kiosk.sh
+static/prototype/
+
+# Contains MQTT credentials - must never be publicly served
+conf/settings.json
