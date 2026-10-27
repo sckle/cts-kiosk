@@ -1,15 +1,18 @@
 [Unit]
-Description=Local python webserver
+Description=Kiosk webserver (application.py, serves pages and handles chart uploads)
 After=network.target
 
 [Service]
-ExecStart=python3 -m http.server 80
+ExecStart=/usr/bin/python3 /home/pi/cts/kiosk/application.py
+Environment=PORT=80
+Environment=PYTHONUNBUFFERED=1
+# Allow binding port 80 without running as root
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+User=pi
 Restart=always
 RestartSec=5
-#User=pi
 #Environment=DISPLAY=:0
 WorkingDirectory=/home/pi/cts/kiosk
 
 [Install]
 WantedBy=multi-user.target
-
