@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GitHub Copilot - AI Models</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 20px 40px;
+    }
+
+    .header img {
+      height: 60px;
+    }
+
+    .header h1 {
+      margin-left: 40px;
+      font-size: 32px;
+    }
+
+    /* IMAGE CONTAINER */
+    .image-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100vh - 120px);
+      overflow: hidden;
+    }
+
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* UPLOAD FORM (shown with ?upload) */
+    .upload {
+      font-size: 18px;
+      padding: 0 40px 10px;
+      text-align: left;
+    }
+
+    .upload code {
+      background: #eee;
+      padding: 2px 6px;
+    }
+
+    .upload label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .upload input,
+    .upload button {
+      font-size: 18px;
+      margin: 0 10px 0 0;
+    }
+
+    .upload-actions {
+      margin-top: 8px;
+    }
+
+    #upload-status {
+      min-height: 1.5em;
+      margin: 8px 0 0;
+      font-weight: bold;
+    }
+
+    #upload-status.ok {
+      color: #2a8a2a;
+    }
+
+    #upload-status.error {
+      color: #c0202a;
+    }
+
+    body.upload-mode .image-wrapper {
+      height: calc(100vh - 270px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <img src="/static/image/axis_logo.png" alt="Axis Logo">
+    <h1>GitHub Copilot - AI Models</h1>
+  </div>
+
+  <form class="upload" id="upload-form" hidden>
+    <label for="upload-file">Replace chart with an SVG file (saved as <code>all-models-cost-vs-intelligence.svg</code>)</label>
+    <input type="file" id="upload-file" accept=".svg,image/svg+xml" required>
+    <div class="upload-actions">
+      <button type="submit" id="upload-submit">Upload</button>
+      <a href="/github-copilot.html">Back to chart</a>
+    </div>
+    <p id="upload-status"></p>
+  </form>
+
+  <div class="image-wrapper">
+    <img id="chart" src="/static/image/all-models-cost-vs-intelligence.svg" alt="AI model intelligence vs. cost by thinking level">
+  </div>
+
+  <script>
+    const chart = document.getElementById('chart');
+    const chartUrl = chart.getAttribute('src');
+
+    // Bypass the browser cache so a newly uploaded chart is shown right away.
+    function refreshChart() {
+      chart.src = `${chartUrl}?t=${Date.now()}`;
+      console.log(chart.src);
+    }
+    refreshChart();
+
+    if (new URLSearchParams(window.location.search).has('upload')) {
+      const form = document.getElementById('upload-form');
+      const fileInput = document.getElementById('upload-file');
+      const submitButton = document.getElementById('upload-submit');
+      const statusText = document.getElementById('upload-status');
+
+      document.body.classList.add('upload-mode');
+      form.hidden = false;
+
+      function showStatus(message, ok) {
+        statusText.textContent = message;
+        statusText.className = ok ? 'ok' : 'error';
+      }
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const file = fileInput.files[0];
+        if (!file) {
+          showStatus('Please select a file.', false);
+          return;
+        }
+        if (!file.name.toLowerCase().endsWith('.svg')) {
+          showStatus(`"${file.name}" is not an .svg file.`, false);
+          return;
+        }
+
+        submitButton.disabled = true;
+        showStatus('Uploading...', true);
+        try {
+          const response = await fetch('/api/upload/github-copilot-image', {
+            method: 'POST',
+            headers: { 'Content-Type': 'image/svg+xml', 'X-Filename': encodeURIComponent(file.name) },
+            body: file,
+          });
+          let result;
+          try {
+            result = await response.json();
+          } catch {
+            result = { ok: false, message: `Upload failed (HTTP ${response.status}).` };
+          }
+          showStatus(result.message, response.ok && result.ok);
+          if (response.ok && result.ok) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            refreshChart();
+            form.reset();
+          }
+        } catch (err) {
+          showStatus(`Upload failed: ${err.message}`, false);
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
