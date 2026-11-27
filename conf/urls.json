@@ -5,6 +5,11 @@
     "duration": 0
   },
   {
+    "name": "github-copilot-agent",
+    "url": "/github-copilot-agent.html",
+    "duration": 45
+  },
+  {
     "name": "github-copilot",
     "url": "/github-copilot.html",
     "duration": 45

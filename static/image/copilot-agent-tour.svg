@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1057 697" width="1057" height="697" xmlns:c2pa="http://c2pa.org/manifest">
+  <style>
+    text { font-family: 'Segoe UI', Arial, Helvetica, sans-serif; }
+    .t  { font-size: 13px; font-weight: 600; fill: #e6e6e6; }
+    .b  { font-size: 12px; fill: #a3a3a3; }
+    .s  { font-size: 11px; fill: #8a8a8a; }
+    .i  { font-size: 13px; fill: #e0e0e0; }
+    .bt { font-size: 12px; fill: #e6e6e6; text-anchor: middle; }
+    .r  { font-size: 12px; fill: #9a9a9a; text-anchor: end; }
+    .n  { font-size: 20px; font-weight: 700; fill: #1e9be0; }
+    .card { fill: #212121; stroke: #333; stroke-width: 1; }
+    .btn  { fill: #1c1c1c; stroke: #555; stroke-width: 1; }
+    .pri  { fill: #2b7aa3; }
+    .dd   { fill: #1f1f1f; stroke: #2f8fc4; stroke-width: 2; }
+    .in   { fill: #252525; stroke: #3a3a3a; stroke-width: 1; }
+    .ln   { stroke: #3a3a3a; stroke-width: 1; }
+    .ic   { fill: none; stroke: #b5b5b5; stroke-width: 1.3; stroke-linecap: round; stroke-linejoin: round; }
+    .pill { fill: #2e2e2e; stroke: #4a4a4a; stroke-width: 1; }
+  </style>
+
+  <!-- page background -->
+  <rect width="1057" height="697" fill="#ffffff"/>
+
+  <!-- ================= PANEL 1 ================= -->
+  <rect x="0" y="0" width="354" height="170" fill="#181818"/>
+  <rect class="card" x="17" y="15" width="320" height="138" rx="8"/>
+  <text class="t" x="34" y="46">Want Faster Answers or Deeper Thinking?</text>
+  <text class="b" x="34" y="72">Switch models to balance reasoning and cost.</text>
+  <text class="b" x="34" y="90">Save the strongest ones for hard problems.</text>
+  <text class="b" x="34" y="129">1 of 3</text>
+  <rect class="btn" x="205" y="111" width="64" height="26" rx="4"/>
+  <text class="bt" x="237" y="128">End Tour</text>
+  <rect class="pri" x="277" y="111" width="44" height="26" rx="4"/>
+  <text class="bt" x="299" y="128">Next</text>
+  <line x1="337" y1="0" x2="337" y2="15" stroke="#3a3a3a" stroke-width="1"/>
+  <text class="n" x="131" y="131">1</text>
+
+  <!-- ================= PANEL 2 ================= -->
+  <rect x="376" y="0" width="681" height="270" fill="#181818"/>
+  <rect class="card" x="390" y="14" width="320" height="138" rx="8"/>
+  <path d="M710 127 L719 136 L710 145 Z" fill="#212121"/>
+  <text class="t" x="407" y="46">Get the Right Kind of Help</text>
+  <text class="b" x="407" y="72">Choose how hands-on the agent is. Work</text>
+  <text class="b" x="407" y="90">together, review a plan first, or let it run.</text>
+  <text class="b" x="407" y="129">2 of 3</text>
+  <rect class="btn" x="527" y="111" width="65" height="26" rx="4"/>
+  <text class="bt" x="559.500" y="128">End Tour</text>
+  <rect class="btn" x="601" y="111" width="42" height="26" rx="4"/>
+  <text class="bt" x="622" y="128">Back</text>
+  <rect class="pri" x="650" y="111" width="43" height="26" rx="4"/>
+  <text class="bt" x="671.500" y="128">Next</text>
+
+  <rect class="dd" x="722" y="14" width="318" height="242" rx="8"/>
+  <rect class="in" x="729" y="25" width="300" height="205" rx="8"/>
+  <rect x="731" y="27" width="296" height="22" rx="5" fill="#2e2e2e"/>
+  <polyline class="ic" points="738,35 742,39 746,35"/>
+  <text class="i" x="755" y="42">Agent mode</text>
+  <rect class="pill" x="950" y="30" width="62" height="16" rx="4"/>
+  <text class="r" x="1006" y="42">Interactive</text>
+
+  <!-- Interactive -->
+  <path class="ic" d="M738 59 h10 v7 h-6 l-3 3 v-3 h-1 z"/>
+  <text class="i" x="755" y="67">Interactive</text>
+  <text class="s" x="755" y="86">Step-by-step collaboration</text>
+  <!-- Plan -->
+  <path class="ic" d="M738 108 h10 M738 112 h10 M738 116 h6"/>
+  <text class="i" x="755" y="115">Plan</text>
+  <text class="s" x="755" y="134">Plan first, execute when ready</text>
+  <!-- Autopilot -->
+  <path class="ic" d="M738 164 l8 -8 l3 3 l-8 8 z M744 158 l3 3"/>
+  <text class="i" x="755" y="163">Autopilot</text>
+  <text class="s" x="755" y="182">Works autonomously within permissions</text>
+
+  <line class="ln" x1="731" y1="197" x2="1027" y2="197"/>
+  <polyline class="ic" points="739,209 743,213 739,217"/>
+  <text class="i" x="755" y="217">Permissions</text>
+  <circle class="ic" cx="957" cy="213" r="3"/>
+  <circle class="ic" cx="957" cy="213" r="6" stroke-dasharray="2.5 2.2"/>
+  <text class="r" x="1012" y="217">Manual</text>
+
+  <circle class="ic" cx="960" cy="241" r="3.500"/>
+  <text x="971" y="245" font-size="12" fill="#cfcfcf">Copilot</text>
+  <rect x="1015" y="231" width="20" height="20" rx="4" fill="#3a3a3a"/>
+  <path class="ic" d="M1020 238 h10 v6 h-6 l-3 3 v-3 h-1 z"/>
+  <text class="n" x="541" y="213">2</text>
+
+  <!-- ================= PANEL 3 ================= -->
+  <rect x="208" y="311" width="685" height="326" fill="#181818"/>
+  <rect class="card" x="226" y="327" width="319" height="156" rx="8"/>
+  <path d="M545 396 L554 405 L545 414 Z" fill="#212121"/>
+  <text class="t" x="243" y="358">Decide What Needs Your Approval</text>
+  <text class="b" x="243" y="381">Choose when the agent asks before editing files</text>
+  <text class="b" x="243" y="399">or running commands. Start cautious, then allow</text>
+  <text class="b" x="243" y="417">more as you trust it.</text>
+  <text class="b" x="243" y="458">3 of 3</text>
+  <rect class="btn" x="432" y="441" width="42" height="26" rx="4"/>
+  <text class="bt" x="453" y="458">Back</text>
+  <rect class="pri" x="482" y="441" width="47" height="26" rx="4"/>
+  <text class="bt" x="505.500" y="458">Done</text>
+
+  <rect class="dd" x="557" y="327" width="320" height="299" rx="8"/>
+  <rect class="in" x="563" y="334" width="300" height="264" rx="8"/>
+
+  <polyline class="ic" points="577,347 581,351 577,355"/>
+  <text class="i" x="591" y="355" fill="#cfcfcf" style="fill:#cfcfcf">Agent mode</text>
+  <text class="r" x="847" y="355">Interactive</text>
+
+  <polyline class="ic" points="577,372 581,376 585,372" transform="translate(0,3)"/>
+  <text class="i" x="591" y="379" style="fill:#cfcfcf">Permissions</text>
+  <circle class="ic" cx="793" cy="374" r="3"/>
+  <circle class="ic" cx="793" cy="374" r="6" stroke-dasharray="2.5 2.2"/>
+  <text class="r" x="847" y="379">Manual</text>
+
+  <!-- Manual permissions -->
+  <circle class="ic" cx="578" cy="400" r="3"/>
+  <path class="ic" d="M580 402 l6 6 M584 406 l2 -2"/>
+  <text class="i" x="591" y="405">Manual permissions</text>
+  <text class="s" x="591" y="424">Asks when approval settings don't apply</text>
+
+  <!-- Assisted permissions -->
+  <circle class="ic" cx="578" cy="437" r="3"/>
+  <text class="i" x="591" y="442">Assisted permissions</text>
+  <rect class="pill" x="730" y="430" width="52" height="16" rx="8"/>
+  <text x="756" y="442" font-size="10" fill="#bdbdbd" text-anchor="middle">Org default</text>
+  <text class="s" x="591" y="466">Evaluates risk before running tools</text>
+  <rect x="780" y="452" width="80" height="17" rx="8.500" fill="#2e2e2e" stroke="#4a4a4a"/>
+  <text x="820" y="464.500" font-size="10" fill="#bdbdbd" text-anchor="middle">Recommended</text>
+
+  <!-- Allow all (highlighted) -->
+  <rect x="567" y="483" width="298" height="46" rx="5" fill="#1c1c1c" stroke="#2f8fc4" stroke-width="1.500"/>
+  <path class="ic" d="M578 492 l6 10 h-12 z M578 496 v3 M578 501 v0.500"/>
+  <text class="i" x="591" y="501" style="fill:#f0f0f0">Allow all</text>
+  <text class="s" x="591" y="520">Runs tool calls without asking</text>
+
+  <!-- Sandboxing -->
+  <path class="ic" d="M578 545 l6 2 v5 c0 3 -3 5 -6 6 c-3 -1 -6 -3 -6 -6 v-5 z"/>
+  <text class="i" x="591" y="554">Sandboxing for terminal</text>
+  <rect x="827" y="542" width="28" height="15" rx="7.500" fill="#4a4a4a"/>
+  <circle cx="834.500" cy="549.500" r="5" fill="#d8d8d8"/>
+
+  <line class="ln" x1="565" y1="568" x2="861" y2="568"/>
+  <text class="i" x="591" y="586">Learn more about permissions</text>
+
+  <circle class="ic" cx="794" cy="611" r="3.500"/>
+  <text x="806" y="615" font-size="12" fill="#cfcfcf">Copilot</text>
+  <rect x="850" y="600" width="22" height="22" rx="4" fill="#3a3a3a"/>
+  <path class="ic" d="M856 607 h10 v6 h-6 l-3 3 v-3 h-1 z"/>
+  <text class="n" x="372" y="561">3</text>
+<metadata><c2pa:manifest>AAAWgmp1bWIAAAAeanVtZGMycGEAEQAQgAAAqgA4m3EDYzJwYQAAABZcanVtYgAAAEdqdW1kYzJtYQARABCAAACqADibcQN1cm46YzJwYTozMTNmYTYzNi1kOWNmLTQ2YTMtYTAwYS0wNTdmNmVlYzdkYjUAAAADl2p1bWIAAAApanVtZGMyYXMAEQAQgAAAqgA4m3EDYzJwYS5hc3NlcnRpb25zAAAAALxqdW1iAAAARGp1bWRjYm9yABEAEIAAAKoAOJtxE2MycGEuaW5ncmVkaWVudC52MwAAAAAYYzJzaFdgnWEQhTSqAhDkJ0S1KC0AAABwY2JvcqNpZGM6Zm9ybWF0bWltYWdlL3N2Zyt4bWxqaW5zdGFuY2VJRHgseG1wOmlpZDo5ZDg1MmIzMi01YmFkLTQ2ZDItOGU1ZS03NzYyODIxNDBlY2FscmVsYXRpb25zaGlwaHBhcmVudE9mAAAB4mp1bWIAAABBanVtZGNib3IAEQAQgAAAqgA4m3ETYzJwYS5hY3Rpb25zLnYyAAAAABhjMnNo95ptXZED+o51Y2uS4DUq1gAAAZljYm9yomdhY3Rpb25zgqJmYWN0aW9ua2MycGEub3BlbmVkanBhcmFtZXRlcnOha2luZ3JlZGllbnRzgaJjdXJseC1zZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmluZ3JlZGllbnQudjNkaGFzaFggKi79wyZfEfRTZ66/YdjuwzupLoMaKA1x6b2zat5t8RqkZmFjdGlvbngdY29tLmFudGhyb3BpYy5jbGF1ZGUucHJvdmlkZWRqcGFyYW1ldGVyc6F4H2NvbS5hbnRocm9waWMub3JpZ2luLWNvbmZpZGVuY2VndW5rbm93bmtkZXNjcmlwdGlvbnhmQ2xhdWRlIHByb3ZpZGVkIHRoaXMgZmlsZSBhdCB0aGUgcmVxdWVzdCBvZiBhIHVzZXIgYW5kIG1heSBoYXZlIGNyZWF0ZWQgb3IgbW9kaWZpZWQgdGhlIGZpbGUgY29udGVudHMubXNvZnR3YXJlQWdlbnShZG5hbWVmQ2xhdWRlcmFsbEFjdGlvbnNJbmNsdWRlZPUAAADIanVtYgAAAEBqdW1kY2JvcgARABCAAACqADibcRNjMnBhLmhhc2guZGF0YQAAAAAYYzJzaEIdBXKhYRc4YRk6bxe9DbAAAACAY2JvcqVjYWxnZnNoYTI1NmNwYWRMAAAAAAAAAAAAAAAAZGhhc2hYIK/DPp+BW6TCh1V6W6s+k8oOe0ke/sdFUeUjUxE8QhAhZG5hbWVuanVtYmYgbWFuaWZlc3RqZXhjbHVzaW9uc4GiZXN0YXJ0GR99Zmxlbmd0aBkeBAAAAj5qdW1iAAAAJ2p1bWRjMmNsABEAEIAAAKoAOJtxA2MycGEuY2xhaW0udjIAAAACD2Nib3KlY2FsZ2ZzaGEyNTZpc2lnbmF0dXJleE1zZWxmI2p1bWJmPS9jMnBhL3VybjpjMnBhOjMxM2ZhNjM2LWQ5Y2YtNDZhMy1hMDBhLTA1N2Y2ZWVjN2RiNS9jMnBhLnNpZ25hdHVyZWppbnN0YW5jZUlEeCx4bXA6aWlkOjc4ZTYwMmQxLTlkZWItNGQ3YS05OTNlLTEzZDc3YjVjMjkwNnJjcmVhdGVkX2Fzc2VydGlvbnODomN1cmx4LXNlbGYjanVtYmY9YzJwYS5hc3NlcnRpb25zL2MycGEuaW5ncmVkaWVudC52M2RoYXNoWCAqLv3DJl8R9FNnrr9h2O7DO6kugxooDXHpvbNq3m3xGqJjdXJseCpzZWxmI2p1bWJmPWMycGEuYXNzZXJ0aW9ucy9jMnBhLmFjdGlvbnMudjJkaGFzaFggjWm9/fXq0GAC4qd9JmTu/WprF7GN/fY014ejqEatqLOiY3VybHgpc2VsZiNqdW1iZj1jMnBhLmFzc2VydGlvbnMvYzJwYS5oYXNoLmRhdGFkaGFzaFgg11bhdVfPK9pCDcBXFEJMoH1vM5pz2+vybcTaSQ9M5EJ0Y2xhaW1fZ2VuZXJhdG9yX2luZm+jZG5hbWVvQW50aHJvcGljIEZpbGVzZ3ZlcnNpb25lMS4wLjBrc3BlY1ZlcnNpb25lMi40LjAAABA4anVtYgAAAChqdW1kYzJjcwARABCAAACqADibcQNjMnBhLnNpZ25hdHVyZQAAABAIY2JvctKEWQISogEmGCFZAgowggIGMIIBjaADAgECAhRA5aAK7sI50L64g/oGQgU9Z1UTADAKBggqhkjOPQQDAzBJMRcwFQYDVQQKEw5BbnRocm9waWMsIFBCQzEuMCwGA1UEAxMlQW50aHJvcGljIENvbnRlbnQgQ3JlZGVudGlhbHMgUm9vdCBDQTAeFw0yNjA4MDcxODQzNTZaFw0yODA4MDYxOTQzNTZaMEQxFzAVBgNVBAoTDkFudGhyb3BpYywgUEJDMSkwJwYDVQQDEyBBbnRocm9waWMgQ2xhdWRlIENvbnRlbnQgU2lnbmluZzBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABJh6CmvLUBgFFNU0vUKlOVtE6djd17L5SuwX0LemFisBM3dkd/3cyjxFA3Qo5S46fX0/ihY0VZ7mfb9KF703t5OjWDBWMA4GA1UdDwEB/wQEAwIHgDAVBgNVHSUEDjAMBgorBgEEAYPoXgIBMAwGA1UdEwEB/wQCMAAwHwYDVR0jBBgwFoAUzlHiBIFOZFsj+OPEz5o+nMHXXMIwCgYIKoZIzj0EAwMDZwAwZAIwMXMdFJ4BetLLVY7ORuE9noqbbAZOZn/aArXyTwFAZfKrPzxF2vPoJNf1+UCdg1XGAjBwX1zd9WGqYkqmL5SFqw1QySjr1zJfpJM9+1rdDwSPLMOPOjKuiXjoU/pUUeG9RwmhY3BhZFkNngAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPZYQL2BhOmmVMGkv2LDTElXDqrKM4jOwSbGzq6i0I+HVAabFndRicq3izPR+fSy+lcASmYnBJbWSYNY4gUuJEk60EM=</c2pa:manifest></metadata></svg>
